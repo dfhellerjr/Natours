@@ -1,0 +1,54 @@
+/* reset all browsers */
+*,
+::after,
+::before
+{
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: inherit;
+            box-sizing: inherit;
+}
+
+html
+{
+    /*
+     initial font-size 
+     typical browser default font-size: 16px
+     we'll define 1 rem = 10px for ease of use; so we'll use 62.5% 
+    */
+    // Standard font-size for screen-widths of 1201 - 1800px
+    font-size: 62.5%;               // 1rem = 10px; 10/16=62.5%
+
+    // Responsive breakpoints
+    // In a laptop-first scheme the order should be from high to low   
+    @include respond(tab-land)      // width < 1201px
+    {
+        font-size: 56.25%;          // 1rem = 9px; 9/16=56.25%
+    }
+    @include respond(tab-port)      // width < 901px
+    {
+        font-size: 50%;             // 1rem = 8px; 8/16=50%
+    }  
+    @include respond(big-desktop)   // width > 1800px
+    {
+        font-size: 75%;             // 1rem = 12px; 12/16=75%
+    }
+}
+
+body
+{
+    padding: 3rem;  /* adds space around all sides */ 
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+
+    @include respond(tab-port)
+    {
+        padding: 0;
+    }
+}
+
+::selection
+{
+    background-color: $color-primary;
+    color: $color-white;
+}

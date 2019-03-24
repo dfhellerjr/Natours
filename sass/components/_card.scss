@@ -1,0 +1,363 @@
+.card
+{
+    // FUNCTIONALITY
+    -moz-perspective: 150rem;
+        perspective: 150rem;
+    position: relative;
+    height: 50rem;
+
+    &__side
+    {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        // Hide backside visibility
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        
+        border-radius: 3px;
+        // Hide any border overflow
+        overflow: hidden;
+        box-shadow: $box-shadow-1;
+        transition: all .8s ease;
+
+        &--front
+        {
+            background-color: $color-white;
+            color: black;
+        }
+
+        &--back
+        {
+            // rotate backside card initially to backside (invisible)
+            transform: rotateY(180deg);
+
+            // Set background image gradients for card backsides
+            &-1
+            {
+                background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
+            }
+
+            &-2
+            {
+                background-image: linear-gradient(to right bottom, $color-primary-light, $color-primary-darkest);
+            }
+
+            &-3
+            {
+                background-image: linear-gradient(to right bottom, $color-tertiary-light, $color-tertiary-dark);
+            }
+        }   
+    }
+
+    // Rotate cards on hover
+    &:hover &__side--front
+    {
+        // front rotates to backside (becomes invisible)
+        transform: rotateY(-180deg);       
+    }
+
+    &:hover &__side--back
+    {
+        // backside rotates to front (becomes visible)
+        transform: rotateY(0);       
+    }
+
+    // FRONT-SIDE STYLING
+    // Images
+    &__picture
+    { 
+        height: 23rem;
+        background-size: cover;
+        // Not supported by IE
+        background-blend-mode: soft-light;
+        // Clip
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+                clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        border-top-left-radius: 3px;
+        border-top-right-radius:3px;
+
+        // Images
+        &--1
+        {
+            background-image: linear-gradient(
+            to right bottom,
+            $color-secondary-light, 
+            $color-secondary-dark), 
+            url(../img/nat-5-small.jpg);          
+            /* for non-supported browsers
+            rgba($color-secondary-light, 0.9), rgba($color-secondary-dark, 0.9)), 
+            url(../img/nat.-5.jpg);
+            */
+            /* Optimize images using css media queries */
+            @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em)
+            {
+                background-image: linear-gradient(
+                to right bottom,
+                $color-secondary-light, 
+                $color-secondary-dark), 
+                url(../img/nat-5.jpg);
+            }
+        }
+
+        &--2
+        {
+            background-image: linear-gradient(
+            to right bottom,
+            $color-primary-light, 
+            $color-primary-darkest), 
+            url(../img/nat-6-small.jpg);          
+            /* for non-supported browsers
+            rgba($color-primary-light, 0.9), rgba($color-primary-darkest, 0.9)), 
+            url(../img/nat.-5.jpg);
+            */
+            /* Optimize images using css media queries */
+            @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em)
+            {
+                background-image: linear-gradient(
+                to right bottom,
+                $color-primary-light, 
+                $color-primary-darkest),
+                url(../img/nat-6.jpg);
+            }
+        }
+
+        &--3
+        {
+            background-image: linear-gradient(
+            to right bottom,
+            $color-tertiary-light, 
+            $color-tertiary-dark), 
+            url(../img/nat-7-small.jpg);          
+            /* for non-supported browsers
+            rgba($color-tertiary-light, 0.9), rgba($color-tertiary-dark, 0.9)), 
+            url(../img/nat.-5.jpg);
+            */
+            /* Optimize images using css media queries */
+            @media (min-resolution: 192dpi) and (min-width: 37.5em), (min-width: 125em)
+            {
+                background-image: linear-gradient(
+                to right bottom,
+                $color-tertiary-light, 
+                $color-tertiary-dark),
+                url(../img/nat-7.jpg);
+            }
+        }
+    }
+
+    &__heading
+    {
+        position: absolute;
+        top: 12rem;
+        right: 2rem;
+        font-size: 2.8rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        text-align: right;
+        color: $color-white;
+    }
+    
+    &__heading-span
+    {
+        padding: 1rem 1.5rem;
+        margin-left: 25%;
+
+        @include respond(phone)
+        {
+            margin-left: 10%;
+        }
+        // apply box decorations across entire span element (which has a line-break in this case)
+        -webkit-box-decoration-break: clone;
+                box-decoration-break: clone;
+
+        // card headings
+        &--1
+        {
+            background-image: linear-gradient(
+            to right bottom,       
+            rgba($color-secondary-light, 0.85), rgba($color-secondary-dark, 0.85)); 
+        }
+        
+        &--2
+        {
+            background-image: linear-gradient(
+            to right bottom,       
+            rgba($color-primary-light, 0.85), rgba($color-primary-darkest, 0.85));
+        }
+
+        &--3
+        {
+            background-image: linear-gradient(
+            to right bottom,       
+            rgba($color-tertiary-light, 0.85), rgba($color-tertiary-dark, 0.85));
+        }
+    }
+
+    // Card details
+    &__details
+    {
+        ul
+        {
+            list-style: none;
+            width: 80%;
+            margin: 5% auto;
+
+            @include respond(phone)
+            {
+                :not(:last-child)
+                {
+                    margin-bottom: -1rem;
+                }
+            }
+
+            li
+            {
+                text-align: center;
+                font-size: 1.5rem;
+                color: $color-grey-dark-2;
+                padding: 1rem;
+
+                @include respond(tab-land)
+                {
+                    margin-top: 7%;
+                    font-size: 1.8rem;
+                }
+                @include respond(phone)
+                {
+                    padding: .5rem;
+                    font-size: 2.2rem;
+                }
+
+                &:not(:last-child)
+                {
+                    border-bottom: 1px solid $color-grey-light-2;
+                }
+            }
+        }       
+    }
+
+    // BACK-SIDE STYLING
+    &__cta
+    {
+        position: absolute;
+        // Center box in card
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);   
+                transform: translate(-50%, -50%);
+        width: 90%;
+        // Center text in box
+        text-align: center;
+    }
+
+    &__price-box
+    {
+        color: $color-white;
+        margin-bottom: 8rem;
+    }
+
+    &__price-only
+    {
+        font-size: 1.4rem;
+        text-transform: uppercase;
+    }
+
+    &__price-value
+    {
+        font-size: $primary-header-font-size;
+        font-weight: 300;
+    }
+
+    .btn
+    {
+        font-size: 1.5rem;
+    }
+
+    // Devices with max-width of 900px or less don't have mouse events
+    @media only screen and (max-width: 56.25em),
+           only screen and (hover: none)
+    {
+        height: auto;
+        border-radius: 3px;
+        background-color: $color-white;
+        box-shadow: 0 1.5rem 4rem rgba($color-black, .15);
+
+        &__heading-span
+        {
+            font-size: 2rem;
+            width: 100%; 
+        }
+        
+        &__side 
+        {
+            height: auto;
+            position: relative;
+            box-shadow: none;
+
+            &--back 
+            {
+                transform: rotateY(0);
+                clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
+            }
+        }
+   
+        &:hover &__side--front 
+        {
+            transform: rotateY(0);
+        }
+   
+        &__details 
+        {
+            padding: 1rem 3rem;
+            ul
+            {
+                li
+                {
+                    font-weight: 700;
+                }
+            }
+        }
+
+        // FRONT SIDE STYLING
+        &__cta 
+        {
+            position: relative;
+            top: 0%;
+            left: 0;
+            transform: translate(0);
+            width: 100%;
+            padding: 7rem 4rem 4rem 4rem;
+        }
+
+        &__price-box 
+        {
+            margin-bottom: 3rem;
+
+            @include respond(phone)
+            {
+                font-size: 250%;
+                font-weight: 700;
+            }
+        }
+
+        &__price-value 
+        {
+            font-size: 4rem;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+    
+
+
+
+

@@ -1,0 +1,123 @@
+.header
+{
+    /* 85% of viewport height for default */
+    height: 85vh;
+    
+    /* linear gradient (with transparency) on top of a background image (hero-small.jpg as default */  background-image: -webkit-gradient(
+        linear, left top, left bottom, from(rgba($color-primary-dark, 0.5)), 
+        to(rgba($color-primary-light, 0.1))),
+        url(../img/hero-small.jpg
+    );    
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color-primary-dark, 0.5), 
+        rgba($color-primary-light, 0.1)),
+        /*use small image as default */
+        url(../img/hero-small.jpg
+    );
+     
+    background-size: cover;
+    background-position: top;
+    position: relative;
+
+    /* clip image; see https://bennettfeely.com/clippy/ for different shapes */
+    /* using graceful degradation */
+    @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) 
+    {
+        /* if clip-path is browser supported */
+        -webkit-clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+        height: 95vh;
+		
+		@include respond(phone)
+        {
+            -webkit-clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+            clip-path: polygon(0 0%, 100% 0%, 100% 75%, 0% 100%);
+            height: 60vh;
+        }
+    }
+
+    /* Optimize images using css media queries; switch to larger image */
+    @media only screen and (min-resolution: 192dpi) and (min-width: 37.5em),
+           only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: 37.5em),
+           only screen and (min-width: 125em)
+	{
+		background-image: linear-gradient(
+            to right bottom,
+            rgba($color-primary-dark, 0.5), 
+            rgba($color-primary-light, 0.1)),
+        url(../img/hero.jpg);
+	}
+  	    
+    &__logo-box
+    {
+        position: absolute;
+        top: 4rem;
+        left: 4rem;
+        @include respond(phone)
+        {
+            top: 3rem;
+            left: 2rem;
+        }
+    }
+
+    &__logo
+    {  
+        height: 2.5em;        
+        @include respond(phone)
+        {
+            height: 2rem;
+        }        
+    }
+
+    &__text-box
+    {
+        position: absolute;
+        top: 30rem;
+        left: 50%;
+        text-align: center;
+        /* move element relative to the element itself (using x,y axis) */   
+        -webkit-transform: translate(-50%,-50%);   
+                transform: translate(-50%,-50%);
+
+        @include respond(tab-port)
+        {
+            padding-bottom: 10rem;
+            .btn
+            {
+                display: block;
+                font-size: 1.38rem;
+                font-weight: 700;
+                margin: 0 auto -10rem auto;
+                width: 75%;
+            }   
+        }
+
+        @include respond(phone)
+        {
+            .heading-primary--main
+            {
+                margin-top: -10rem;
+                font-size: 4rem;
+            }
+            .btn
+            {
+                display: block;
+                font-size: 1.38rem;
+                font-weight: 700;
+                margin: -5rem auto 0 auto;
+                width: 75%;
+            }
+        }
+    }
+
+ /* Icon hover animation (if desired) 
+    &__logo-box:hover .header__logo
+    {
+        animation-name: moveInRight;
+        animation-duration: 1s; 
+        animation-timing-function: ease-out;
+        backface-visibility: hidden;    
+    }
+*/
+}

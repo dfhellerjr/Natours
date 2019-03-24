@@ -1,0 +1,62 @@
+// Clear floats
+@mixin clearfix
+{
+    &::after
+    {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+// Absolute center
+@mixin absCenter
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// --------------------------------------------- //
+// MEDIA QUERY MANAGER (desk-top first approach)
+// --------------------------------------------- //
+/*
+0    - 472     small phone [max-width query]
+473  - 600px   phone  [max-width query]
+601  - 900px   tablet (portrait) [max-width query]
+901  - 1200px  tablet (landscape) [max-width query]
+1201 - 1800px  desk-top (normal) --> this is what our normal code is written for
+1800px +       big desk-top [min-width query]
+
+ $breakpoint argument choices
+- sm-phone
+- phone     
+- tab-port
+- tab-land
+- big-desktop
+
+We will use ems as our unit in these mixins as a best-practice: 
+1em = 16px (standard browser default)
+
+ORDER of making style changes: Base + typography > general layout + grid > page layout > components
+*/
+@mixin respond($breakpoint)
+{
+    @if $breakpoint == phone 
+    {
+        @media only screen and (max-width: 37.5em) { @content };    // 600px 
+    }
+    @else if $breakpoint == tab-port
+    {
+        @media only screen and (max-width: 56.25em) { @content };   // 900px    
+    }
+    @else if $breakpoint == tab-land
+    {
+        @media only screen and (max-width: 75em) { @content };      // 1200px    
+    }
+    @else if $breakpoint == big-desktop
+    {
+        @media only screen and (min-width: 112.5em) { @content };   // 1800px   
+    }
+}

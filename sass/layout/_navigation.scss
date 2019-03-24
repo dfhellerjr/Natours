@@ -1,0 +1,233 @@
+.navigation
+{
+    // hide the checkbox
+    &__checkbox
+    {
+        display: none;
+    }
+
+    // create a custom button (in the label element) to replace the checkbox
+    &__button
+    {
+        background-color: $color-white;
+        height: 6.5rem;
+        width: 6.5rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6rem;
+        right: 6rem;
+        z-index: 2000;
+        box-shadow: 0 1rem 3rem rgba($color-black, 0.1);
+        text-align: center;
+        cursor: pointer;
+
+        @include respond(phone)
+        {
+            padding-right: 0; 
+            width: 5rem;
+            height: 5rem; 
+            top: 2rem;
+            right: 6.5rem;        
+        }
+    }
+
+    // background-image hidden behind the custom button
+    &__background
+    {
+        // hidden button area (to hold background-image for nav page)   
+        height: 5.5rem;
+        width: 5.5rem;
+        border-radius: 50%;
+        position: fixed;
+        top: 6.5rem;
+        right: 6.75rem;
+     
+        // background image
+        background-image: radial-gradient($color-primary, $color-primary-light);
+        z-index: 1000;
+        transition: all .8s cubic-bezier(0.86, 0, 0.07, 1);   
+        
+        @include respond(phone)
+        {
+            padding-right: 0;
+            width: 4rem;
+            height: 4rem;
+            top: 2.5rem;
+            right: 7rem;   
+        }
+    }
+   
+    // nav area
+    &__nav
+    {
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1500;
+        // hide initially (this combination preserves animation)
+        opacity: 0;
+        width: 0;
+        visibility: hidden;
+        // animate
+        transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    // nav list
+    &__list
+    {
+        list-style: none;
+        text-align: center;
+        // center list
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);      
+    }
+
+    // nav list items
+    &__item
+    {
+        margin: 1rem 1rem;    
+    }
+
+    // nav links
+    &__link
+    {
+        &:link,
+        &:visited
+        {
+            display: inline-block;
+            font-size: $large-font-size-2;
+            font-weight: 300;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            color: $color-white;
+            text-transform: uppercase;
+            // background-image
+            background-image: linear-gradient(120deg, transparent 0%, transparent 50%, $color-white 50%);
+
+            /*expand the image container (x-axis); this pushes the white background out of the       container (to the right) rendering it invisible*/
+            background-size: 225%;
+            transition: all .4s;
+            span 
+            {
+                display: inline-block;
+                margin-right: .9rem;
+            }
+        }
+
+        &:hover,
+        &:active
+        {
+            /* re-align the background image so that the last pixel of the white background becomes
+               aligned with the last pixel of the container. This pushes the transparent portion of
+               the gradient out of the container (to the left)*/
+            background-position: 100%;
+            color: $color-primary-darkest;
+            transform: translateX(1rem);
+        }
+    }
+
+    // FUNCTIONALITY
+    // check-box hack (uses checked pseudo-class and general sibling selector)
+    &__checkbox:checked ~ &__background
+    {
+        // expands the background-image to consume the entire page
+        transform: scale(80);   
+    }
+
+    &__checkbox:checked ~ &__nav
+    {
+        // re-set visibility and opacity of the navigation area (makes visible)
+        opacity: 1;
+        width: 100%;
+        visibility: visible;  
+    }
+
+    // Custom nav icon
+    &__icon
+    {
+        position: relative;
+        margin-top: 3.25rem;
+        @include respond(phone)
+        {
+            margin-top: 3rem;
+        }
+
+        // create the horizontal lines in the nav button
+        &,
+        &::before,
+        &::after
+        {
+            width: 3rem;
+            height: 2px;
+            background-color: $color-grey-dark-2;
+            display: inline-block;
+
+            @include respond(phone)
+            {          
+                top: -.65rem;
+                background-color: $color-grey-dark-3;
+            }
+        }
+
+        // position the top/bottom lines
+        &::before,
+        &::after
+        {
+            content: "";
+            position: absolute;
+            left: 0;
+            transition: all .2s;           
+        }
+
+        &::before
+        {
+            top: -.8rem;     
+        }
+        &::after
+        {
+            top: .8rem;
+            @include respond(phone)
+            {
+                top: 1rem;
+            }       
+        }
+    }
+
+    // button hover
+    &__button:hover &__icon::before
+    {
+        // move top line up
+        top: -1rem;         
+    }
+
+    &__button:hover &__icon::after
+    {
+        // move bottom line down
+        top: 1rem;    
+    }
+
+    // checked (using adjacent sibling selectors)
+    &__checkbox:checked + &__button &__icon
+    {
+        // hide the middle line
+        background-color: transparent;
+    } 
+
+    // rotate top/bottom lines to form an X
+    &__checkbox:checked + &__button &__icon::before
+    {
+        top: 0;
+        transform: rotate(135deg);        
+    } 
+
+    &__checkbox:checked + &__button &__icon::after
+    {
+        top: 0;
+        transform: rotate(-135deg);        
+    } 
+}
