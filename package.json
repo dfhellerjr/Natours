@@ -23,6 +23,7 @@
     "postcss-cli": "^6.0.1"
   },
   "dependencies": {
-    "event-stream": "^4.0.1"
+    "event-stream": "^4.0.1",
+    "lodash": "^4.17.11"
   }
 }
